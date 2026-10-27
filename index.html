@@ -21,6 +21,66 @@
     @media(max-width:900px){.hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr}.hero-grid{gap:35px}.hero-visual,.hero-visual img{height:440px;min-height:440px}.section{padding:82px 0}.about-grid{gap:36px}.contact-grid{gap:40px}.process-grid{grid-template-columns:repeat(2,1fr)}.process:nth-child(2){border-right:0}.process:nth-child(-n+2){border-bottom:1px solid var(--line)}.section-head{align-items:start;flex-direction:column;gap:18px}.work-card,.work-card.wide{grid-column:span 6}.work-card.wide .work-image,.work-image{height:260px}.cta-band{align-items:start;flex-direction:column}.nav-links{gap:15px}}
     @media(max-width:640px){.wrap{width:min(100% - 32px,var(--max))}.topbar nav{min-height:68px}.menu-toggle{display:block}.nav-cta{display:none}.nav-links{display:none;position:absolute;top:68px;left:0;right:0;background:var(--bg);padding:18px 20px 24px;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:0}.nav-links.open{display:flex}.nav-links a{padding:12px 0;border-bottom:1px solid var(--line)}.hero{padding:56px 0 44px}.hero h1{font-size:clamp(3.5rem,17vw,5.7rem)}.hero-copy{font-size:14px}.hero-visual,.hero-visual img{height:360px;min-height:360px}.hero-meta{gap:12px;font-size:9px}.section{padding:68px 0}.section-head h2{font-size:clamp(2.7rem,13vw,4.2rem)}.service-grid{grid-template-columns:1fr}.service-card{min-height:285px;padding:23px}.service-card h3{margin-top:42px}.work-card,.work-card.wide{grid-column:span 12}.work-card.wide .work-image,.work-image{height:260px}.about-art{min-height:340px}.process-grid{grid-template-columns:1fr 1fr}.process{padding:18px 14px;min-height:190px}.process h3{font-size:18px;margin-top:25px}.cta-band{padding:30px 22px}.form-row{grid-template-columns:1fr;gap:0}.contact-form{padding:20px}.footer-row{align-items:start;flex-direction:column}.footer-links{flex-wrap:wrap}.ticker-inner{justify-content:start;gap:14px 22px}.ticker-inner span{flex:0 0 auto}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+
+    /* Art direction refinement: fewer frames, stronger contrast, two genuinely distinct worlds. */
+    :root{--line:rgba(243,240,233,.12);--panel:#191917}
+    body:before{display:none}
+    .section{border-top:0;padding:124px 0}
+    .topbar{border-bottom:1px solid rgba(243,240,233,.07)}
+    .btn{border:0;transition:transform .22s,background .22s,color .22s}
+    .btn:not(.btn-primary){background:transparent;padding-inline:8px}
+    .btn:not(.btn-primary):hover{color:var(--orange);border-color:transparent}
+    .hero-visual{border:0;background:#191917}
+    .hero-visual img{filter:saturate(.95);opacity:.94}
+    .visual-index{border:0;background:rgba(17,17,15,.65)}
+    .hero-meta{border-top:1px solid rgba(243,240,233,.14)}
+    .ticker{border-block:1px solid rgba(243,240,233,.09)}
+    .service-grid{display:none}
+    .worlds-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:610px}
+    .world-card{position:relative;isolation:isolate;display:flex;min-height:610px;overflow:hidden;padding:34px;color:#f3f0e9}
+    .world-creative{background:#32201c}
+    .world-photo,.world-wash{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+    .world-photo{object-fit:cover;object-position:center;filter:saturate(.8);transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+    .world-creative .world-wash{background:linear-gradient(180deg,rgba(15,12,10,.2) 0%,rgba(15,12,10,.12) 30%,rgba(15,12,10,.86) 100%),linear-gradient(90deg,rgba(15,12,10,.22),transparent)}
+    .world-card:hover .world-photo{transform:scale(1.035)}
+    .world-digital{background:#e8e4da;color:#171714;overflow:hidden}
+    .world-content{display:flex;flex-direction:column;justify-content:space-between;gap:30px;width:100%;min-height:540px;position:relative;z-index:2}
+    .world-kicker{display:flex;justify-content:space-between;gap:14px;font:10px var(--mono);letter-spacing:.12em;text-transform:uppercase}
+    .world-creative .world-kicker{color:#fff0e7}
+    .world-digital .world-kicker{color:#625f56}
+    .world-title-wrap{margin:auto 0;position:relative}
+    .world-intro{font:12px var(--mono);letter-spacing:.04em;margin:0 0 20px;opacity:.8}
+    .world-title-wrap h3{font:600 clamp(3.6rem,6.2vw,6.4rem)/.82 var(--display);letter-spacing:-.085em;margin:0;text-transform:uppercase}
+    .world-title-wrap h3 em{font-style:normal;color:var(--orange)}
+    .world-bottom{display:flex;align-items:end;justify-content:space-between;gap:20px;padding-top:20px}
+    .world-bottom p{max-width:330px;margin:0;font-size:12px;line-height:1.7;opacity:.8}
+    .world-arrow{font-size:30px;line-height:1;transition:transform .2s}
+    .world-card:hover .world-arrow{transform:translate(4px,-4px)}
+    .digital-grid-art{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+    .digital-grid-art:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(23,23,20,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(23,23,20,.06) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(130deg,black,transparent 80%)}
+    .orbit{position:absolute;display:block;border:1px solid rgba(23,23,20,.18);border-radius:50%;width:390px;height:390px;right:-100px;top:85px}
+    .orbit-two{width:260px;height:260px;right:-35px;top:150px;border-color:rgba(255,106,53,.55)}
+    .digital-cross{position:absolute;right:70px;top:130px;font:100px/.8 var(--display);font-weight:400;color:var(--orange)}
+    .digital-code{position:absolute;right:24px;top:250px;font:500 14px/1.5 var(--mono);color:rgba(23,23,20,.62);text-align:right}
+    .digital-node{position:absolute;width:9px;height:9px;background:var(--orange);border-radius:50%}
+    .node-one{right:95px;top:210px}.node-two{right:245px;top:360px}.node-three{right:52px;top:445px}
+    .world-digital .world-title-wrap{z-index:2}
+    .world-digital .world-title-wrap h3{font-size:clamp(3.6rem,6vw,6rem)}
+    .work-card{border:0;background:transparent}
+    .work-image{background:#191917}
+    .work-info{padding:18px 0}
+    .filter{border:0;border-bottom:1px solid transparent;padding:10px 12px}
+    .filter[aria-pressed=true],.filter:hover{border-color:var(--orange)}
+    .about-art{border:0}
+    .process-grid{border:0;gap:1px;background:rgba(243,240,233,.12)}
+    .process{border:0;background:var(--bg)}
+    .contact-form{border:0;background:#191917;padding:32px}
+    .field input,.field select,.field textarea{border:0;border-bottom:1px solid rgba(243,240,233,.2);background:#11110f}
+    .field input:focus,.field select:focus,.field textarea:focus{border-bottom-color:var(--orange)}
+    .contact-item span{border:0;background:#191917}
+    @media(max-width:900px){.worlds-grid{min-height:540px}.world-card{min-height:540px;padding:26px}.world-content{min-height:490px}.world-title-wrap h3{font-size:clamp(3.4rem,7vw,5rem)}.section{padding:90px 0}}
+    @media(max-width:640px){.section{padding:72px 0}.worlds-grid{grid-template-columns:1fr}.world-card{min-height:510px;padding:24px}.world-content{min-height:460px}.world-title-wrap h3,.world-digital .world-title-wrap h3{font-size:clamp(4rem,16vw,6rem)}.world-bottom p{max-width:260px}.contact-form{padding:22px}.worlds-grid{gap:0}.world-digital{min-height:500px}}
+
   </style>
 </head>
 <body>
@@ -58,33 +118,25 @@
     <section class="section" id="services">
       <div class="wrap">
         <div class="section-head"><div><div class="eyebrow">Capabilities / What we do</div><h2 class="display">TWO WORLDS.<br><span class="accent">ONE STANDARD.</span></h2></div><p>From the first frame to the final interface, we combine creative thinking with a considered, practical approach to execution.</p></div>
-        <div class="service-grid">
-          <a class="service-card" href="#contact" data-service="Visual production">
-            <div class="card-top"><span>Track 01 / Creative</span><span class="service-icon" aria-hidden="true">◉</span></div>
-            <h3>Visual production<span class="accent">.</span></h3>
-            <p>Cinematography, photography, editing, and motion designed to give brands a stronger visual voice.</p>
-            <div class="service-link">Build your visual story <span>↗</span></div>
+        <div class="worlds-grid">
+          <a class="world-card world-creative" href="#contact" data-service="Visual production">
+            <img class="world-photo" src="retouch_2025072022312035.jpg" alt="A filmmaker working with a camera on set" loading="lazy">
+            <span class="world-wash" aria-hidden="true"></span>
+            <div class="world-content">
+              <div class="world-kicker"><span>WORLD 01</span><span>CREATIVE PRODUCTION</span></div>
+              <div class="world-title-wrap"><p class="world-intro">Feel it. See it. Remember it.</p><h3>MAKE<br>PEOPLE<br><em>FEEL.</em></h3></div>
+              <div class="world-bottom"><p>Film · Photography · Brand identity · Motion · Post-production</p><span class="world-arrow" aria-hidden="true">↗</span></div>
+            </div>
           </a>
-          <a class="service-card" href="#contact" data-service="Digital engineering">
-            <div class="card-top"><span>Track 02 / Digital</span><span class="service-icon" aria-hidden="true">⌘</span></div>
-            <h3>Digital engineering<span class="accent">.</span></h3>
-            <p>Brand-led websites, responsive digital experiences, and custom software built around real business needs.</p>
-            <div class="service-link">Build your digital product <span>↗</span></div>
+          <a class="world-card world-digital" href="#contact" data-service="Digital engineering">
+            <div class="digital-grid-art" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="digital-cross">×</span><span class="digital-code">&lt;build<br>something<br>useful /&gt;</span><span class="digital-node node-one"></span><span class="digital-node node-two"></span><span class="digital-node node-three"></span></div>
+            <div class="world-content">
+              <div class="world-kicker"><span>WORLD 02</span><span>DIGITAL ENGINEERING</span></div>
+              <div class="world-title-wrap"><p class="world-intro">Think clearly. Build for real life.</p><h3>MAKE IT<br><em>WORK.</em></h3></div>
+              <div class="world-bottom"><p>Websites · Software · Digital products · Interactive experiences</p><span class="world-arrow" aria-hidden="true">↗</span></div>
+            </div>
           </a>
-          <a class="service-card" href="#contact" data-service="Brand and design">
-            <div class="card-top"><span>Track 03 / Identity</span><span class="service-icon" aria-hidden="true">✳</span></div>
-            <h3>Brand & design<span class="accent">.</span></h3>
-            <p>Visual systems, campaign assets, and design direction that help an organization show up consistently.</p>
-            <div class="service-link">Shape your identity <span>↗</span></div>
-          </a>
-          <a class="service-card" href="#contact" data-service="Hybrid projects">
-            <div class="card-top"><span>Track 04 / Integrated</span><span class="service-icon" aria-hidden="true">↗</span></div>
-            <h3>Hybrid projects<span class="accent">.</span></h3>
-            <p>Integrated campaigns and digital launches where strong storytelling and dependable technology work together.</p>
-            <div class="service-link">Bring disciplines together <span>↗</span></div>
-          </a>
-        </div>
-      </div>
+        </div>      </div>
     </section>
 
     <section class="section" id="work">
