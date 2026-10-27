@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://focalforgestudios.github.io/FocalForge-Landing-Page/sitemap.xml
