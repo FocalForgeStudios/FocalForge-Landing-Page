@@ -139,3 +139,14 @@
   .footer-brand,.footer-bottom{grid-column:1}
   .footer-bottom{flex-direction:column}
 }
+
+/* Keep footer columns vertical; older generic footer rules should not flatten them. */
+.site-footer>.footer-brand,.site-footer>.footer-column{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:14px;
+  font:inherit;
+}
+.site-footer>.footer-brand{gap:0}
+.site-footer>.footer-column .footer-label{font:9px var(--mono);letter-spacing:.12em}
