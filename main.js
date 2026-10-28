@@ -128,4 +128,23 @@
     }, { threshold: 0.12 });
     revealTargets.forEach(element => observer.observe(element));
   }
+
+
+  // Subtle pointer-driven depth: keep motion restrained and disable it for touch/reduced-motion.
+  const heroArt = document.querySelector('.opening-art');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (heroArt && !reducedMotion && window.matchMedia('(pointer: fine)').matches) {
+    heroArt.addEventListener('pointermove', event => {
+      const rect = heroArt.getBoundingClientRect();
+      const px = ((event.clientX - rect.left) / rect.width - .5) * 2;
+      const py = ((event.clientY - rect.top) / rect.height - .5) * 2;
+      heroArt.style.setProperty('--px', px.toFixed(3));
+      heroArt.style.setProperty('--py', py.toFixed(3));
+    });
+    heroArt.addEventListener('pointerleave', () => {
+      heroArt.style.setProperty('--px', '0');
+      heroArt.style.setProperty('--py', '0');
+    });
+  }
+
 })();
