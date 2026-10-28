@@ -356,3 +356,24 @@ body{background:#080807;color:var(--white);overflow-x:hidden}
 @media(prefers-reduced-motion:reduce){
  .hero-orbit,.hero-glass,.opening-photo img{animation:none!important}
 }
+
+
+/* Real WebGL hero scene — Three.js canvas, not CSS-generated pseudo-3D. */
+.opening-art{position:relative;isolation:isolate;perspective:none;transform:none;overflow:visible}
+#focal-scene{position:absolute;inset:0;display:block;width:100%;height:100%;z-index:1;outline:none}
+.opening-art:before{z-index:0}
+.opening-art:after{z-index:2;pointer-events:none}
+.scene-loader{position:absolute;z-index:8;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:10px;font:9px var(--mono);letter-spacing:.15em;color:#ff8b67;transition:opacity .5s ease}
+.scene-loader span{width:7px;height:7px;border-radius:50%;background:var(--orange);box-shadow:0 0 18px var(--orange);animation:scene-pulse 1s ease-in-out infinite}
+.scene-loader.is-hidden{opacity:0;pointer-events:none}
+.hero-glass,.opening-stamp,.opening-caption,.hero-vertical-note{z-index:6}
+.hero-glass{transform:none;will-change:transform}
+.hero-glass-top{animation:float-card 7s ease-in-out infinite}
+.hero-glass-side{animation:float-card 8s ease-in-out -2s infinite}
+.hero-glass-bottom{animation:float-card 9s ease-in-out -4s infinite}
+@keyframes scene-pulse{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+@media(max-width:760px){
+ .opening-art{overflow:visible;perspective:none}
+ #focal-scene{inset:0}
+}
+@media(prefers-reduced-motion:reduce){.scene-loader span{animation:none}.hero-glass{animation:none!important}}
