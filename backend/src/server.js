@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const crypto = require('node:crypto');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
@@ -25,10 +26,42 @@ app.use(cors({
     return callback(new Error('Origin is not allowed by CORS'));
   },
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json({ limit: '24kb', strict: true }));
 app.use('/api/inquiries', rateLimit({ windowMs: 15 * 60 * 1000, limit: 8, standardHeaders: 'draft-7', legacyHeaders: false }));
+
+const projectSchema = z.object({
+  slug: z.string().trim().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/).max(100),
+  title: z.string().trim().min(2).max(180),
+  category: z.enum(['visual','digital','brand']),
+  summary: z.string().trim().min(10).max(2000),
+  problem: z.string().trim().max(3000).optional().default(''),
+  execution: z.string().trim().max(3000).optional().default(''),
+  deliverables: z.string().trim().max(2000).optional().default(''),
+  image_url: z.string().trim().max(2000).optional().default(''),
+  tags: z.array(z.string().trim().min(1).max(40)).max(10).optional().default([]),
+  featured: z.boolean().optional().default(false),
+  published: z.boolean().optional().default(false),
+  sort_order: z.number().int().min(0).max(10000).optional().default(100)
+}).strict();
+const pricingSchema = z.object({
+  track: z.enum(['visual','software','hybrid']),
+  item_key: z.string().trim().regex(/^[a-z0-9_-]+$/).max(40),
+  label: z.string().trim().min(2).max(180),
+  min_cost: z.number().int().min(0).max(1000000000),
+  max_cost: z.number().int().min(0).max(1000000000),
+  published: z.boolean().optional().default(false),
+  sort_order: z.number().int().min(0).max(10000).optional().default(100)
+}).strict().refine(value => value.max_cost >= value.min_cost, { message: 'max_cost must be greater than or equal to min_cost' });
+function requireAdmin(req, res, next) {
+  const expected = process.env.CMS_ADMIN_TOKEN || '';
+  const supplied = (req.get('authorization') || '').replace(/^Bearer\s+/i, '');
+  if (!expected) return res.status(503).json({ error: 'CMS admin token is not configured.' });
+  const a = Buffer.from(expected), b = Buffer.from(supplied);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return res.status(401).json({ error: 'Unauthorized.' });
+  return next();
+}
 
 const inquirySchema = z.object({
   name: z.string().trim().min(2).max(120),
@@ -65,6 +98,42 @@ app.get('/api/pricing', async (_req, res, next) => {
     );
     res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
     res.json({ pricing: rows });
+  } catch (error) { next(error); }
+});
+
+app.post('/api/admin/projects', requireAdmin, async (req, res, next) => {
+  const parsed = projectSchema.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: 'Invalid project record.', issues: parsed.error.issues });
+  const p = parsed.data;
+  try {
+    const { rows } = await pool.query(
+      `INSERT INTO projects (slug,title,category,summary,problem,execution,deliverables,image_url,tags,featured,published,sort_order)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+       ON CONFLICT (slug) DO UPDATE SET title=EXCLUDED.title, category=EXCLUDED.category, summary=EXCLUDED.summary,
+       problem=EXCLUDED.problem, execution=EXCLUDED.execution, deliverables=EXCLUDED.deliverables,
+       image_url=EXCLUDED.image_url, tags=EXCLUDED.tags, featured=EXCLUDED.featured, published=EXCLUDED.published,
+       sort_order=EXCLUDED.sort_order, updated_at=now()
+       RETURNING id,slug,title,published,updated_at`,
+      [p.slug,p.title,p.category,p.summary,p.problem,p.execution,p.deliverables,p.image_url,p.tags,p.featured,p.published,p.sort_order]
+    );
+    res.status(200).json({ project: rows[0] });
+  } catch (error) { next(error); }
+});
+
+app.post('/api/admin/pricing', requireAdmin, async (req, res, next) => {
+  const parsed = pricingSchema.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: 'Invalid pricing record.', issues: parsed.error.issues });
+  const p = parsed.data;
+  try {
+    const { rows } = await pool.query(
+      `INSERT INTO pricing_catalog (track,item_key,label,min_cost,max_cost,published,sort_order)
+       VALUES ($1,$2,$3,$4,$5,$6,$7)
+       ON CONFLICT (track,item_key) DO UPDATE SET label=EXCLUDED.label,min_cost=EXCLUDED.min_cost,
+       max_cost=EXCLUDED.max_cost,published=EXCLUDED.published,sort_order=EXCLUDED.sort_order,updated_at=now()
+       RETURNING track,item_key,label,min_cost,max_cost,published,updated_at`,
+      [p.track,p.item_key,p.label,p.min_cost,p.max_cost,p.published,p.sort_order]
+    );
+    res.status(200).json({ pricing: rows[0] });
   } catch (error) { next(error); }
 });
 
