@@ -101,6 +101,8 @@ app.get('/api/pricing', async (_req, res, next) => {
   } catch (error) { next(error); }
 });
 
+app.use('/api/admin', rateLimit({ windowMs: 15 * 60 * 1000, limit: 30, standardHeaders: 'draft-7', legacyHeaders: false }));
+
 app.post('/api/admin/projects', requireAdmin, async (req, res, next) => {
   const parsed = projectSchema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: 'Invalid project record.', issues: parsed.error.issues });
