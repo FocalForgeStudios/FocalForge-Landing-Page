@@ -15,7 +15,7 @@ A responsive studio website with a restrained black / charcoal / white palette a
 
 ## Backend
 
-See [backend/README.md](backend/README.md). The Express API validates and stores project enquiries in PostgreSQL, supports a published-project read endpoint, and optionally sends webhook notifications. The schema and migration runner are included.
+See [backend/README.md](backend/README.md). The Express API validates and stores project enquiries in PostgreSQL, supports published-project and pricing-catalog read endpoints, and optionally sends webhook notifications. The schema and migration runner are included.
 
 ## Run locally
 
