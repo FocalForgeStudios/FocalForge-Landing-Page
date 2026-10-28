@@ -76,6 +76,28 @@
   // Honest, dependency-free enquiry handoff. No false claim that a message was stored.
   const form = document.querySelector('#project-form');
   const status = document.querySelector('#form-status');
+  const whatsappLink = document.querySelector('#whatsapp-submit');
+  function buildBrief(values) {
+    return [
+      'Hello Focal Forge Studios,',
+      '',
+      'I would like to discuss a project.',
+      '',
+      'Name: ' + String(values.get('name') || '').trim(),
+      'Email: ' + String(values.get('email') || '').trim(),
+      'Area: ' + String(values.get('service') || '').trim(),
+      '',
+      'Project brief:',
+      String(values.get('brief') || '').trim()
+    ].join('\\n');
+  }
+  function refreshWhatsApp() {
+    if (!form || !whatsappLink) return;
+    const values = new FormData(form);
+    whatsappLink.href = 'https://wa.me/256708509413?text=' + encodeURIComponent(buildBrief(values));
+  }
+  form?.addEventListener('input', refreshWhatsApp);
+  form?.addEventListener('change', refreshWhatsApp);
   form?.addEventListener('submit', event => {
     event.preventDefault();
     if (!form.reportValidity()) return;
@@ -83,23 +105,11 @@
     const name = String(values.get('name') || '').trim();
     const service = String(values.get('service') || '').trim();
     const subject = encodeURIComponent('Project enquiry — ' + name + ' / ' + service);
-    const body = encodeURIComponent([
-      'Hello Focal Forge Studios,',
-      '',
-      'I would like to discuss a project.',
-      '',
-      'Name: ' + name,
-      'Email: ' + String(values.get('email') || '').trim(),
-      'Area: ' + service,
-      '',
-      'Project brief:',
-      String(values.get('brief') || '').trim(),
-      '',
-      'Sent from the Focal Forge Studios website.'
-    ].join('\n'));
-    if (status) status.textContent = 'Opening your email app with the project brief. If it does not open, email focalforges@gmail.com directly.';
+    const body = encodeURIComponent(buildBrief(values));
+    if (status) status.textContent = 'Opening your email app with the project brief. If it does not open, use the WhatsApp option or email focalforges@gmail.com directly.';
     window.location.href = 'mailto:focalforges@gmail.com?subject=' + subject + '&body=' + body;
   });
+  refreshWhatsApp();
 
   const year = document.querySelector('#year');
   if (year) year.textContent = new Date().getFullYear();
