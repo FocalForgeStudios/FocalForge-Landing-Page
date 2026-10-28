@@ -196,7 +196,23 @@
       const note=$('.disclaimer');if(note)note.textContent='Published portfolio entries are loaded from the studio CMS when the API is connected. The original archive remains as a fallback.';
     }catch(_){/* Keep the statically curated archive usable when API is offline. */}
   }
+  async function loadPricing(){
+    if(!apiBase)return;
+    try{
+      const response=await fetch(apiBase+'/api/pricing',{headers:{Accept:'application/json'}});
+      if(!response.ok)return;
+      const data=await response.json();
+      if(!Array.isArray(data.pricing))return;
+      data.pricing.forEach(row=>{
+        const track=tracks[row.track];if(!track||!Number.isFinite(Number(row.min_cost))||!Number.isFinite(Number(row.max_cost)))return;
+        const item=track.items.find(i=>i[0]===row.item_key);if(!item)return;
+        item[1]=String(row.label||item[1]);item[2]=Number(row.min_cost);item[3]=Number(row.max_cost);
+      });
+      renderDeliverables();renderEstimator();
+    }catch(_){/* Keep editable local baseline assumptions as fallback. */}
+  }
   loadPortfolio();
+  loadPricing();
   $('#year').textContent=new Date().getFullYear();
 
   if('IntersectionObserver'in window&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
