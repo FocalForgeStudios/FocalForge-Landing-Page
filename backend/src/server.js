@@ -58,6 +58,16 @@ app.get('/api/projects', async (_req, res, next) => {
   } catch (error) { next(error); }
 });
 
+app.get('/api/pricing', async (_req, res, next) => {
+  try {
+    const { rows } = await pool.query(
+      'SELECT track, item_key, label, min_cost, max_cost FROM pricing_catalog WHERE published = TRUE ORDER BY track, sort_order'
+    );
+    res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
+    res.json({ pricing: rows });
+  } catch (error) { next(error); }
+});
+
 app.post('/api/inquiries', async (req, res, next) => {
   const parsed = inquirySchema.safeParse(req.body);
   if (!parsed.success) {
