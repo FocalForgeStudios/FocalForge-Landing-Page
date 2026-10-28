@@ -36,3 +36,20 @@ CREATE INDEX IF NOT EXISTS projects_published_sort_idx ON projects (published, f
 
 -- Deliberately no invented client case studies are seeded. Publish only approved records
 -- after entering verified project details and trusted image URLs through a controlled CMS/admin workflow.
+
+-- Publicly readable planning prices. Update these rows through a secured admin workflow.
+-- The frontend uses local fallback assumptions until the API is configured.
+CREATE TABLE IF NOT EXISTS pricing_catalog (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  track VARCHAR(20) NOT NULL CHECK (track IN ('visual','software','hybrid')),
+  item_key VARCHAR(40) NOT NULL,
+  label VARCHAR(180) NOT NULL,
+  min_cost INTEGER NOT NULL CHECK (min_cost >= 0),
+  max_cost INTEGER NOT NULL CHECK (max_cost >= min_cost),
+  published BOOLEAN NOT NULL DEFAULT false,
+  sort_order INTEGER NOT NULL DEFAULT 100,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (track, item_key)
+);
+CREATE INDEX IF NOT EXISTS pricing_catalog_published_idx ON pricing_catalog (published, track, sort_order);
