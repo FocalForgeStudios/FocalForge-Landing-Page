@@ -17,3 +17,136 @@
 .reveal-ready{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}.reveal-ready.revealed{opacity:1;transform:none}@media(prefers-reduced-motion:reduce){.reveal-ready{opacity:1;transform:none;transition:none}}
 
 .whatsapp-submit{display:flex;justify-content:space-between;gap:14px;margin-top:13px;padding:12px 0;color:#c9c5bb;font-size:11px}.whatsapp-submit span{font-size:16px;color:var(--orange)}.whatsapp-submit:hover{color:var(--white)}
+
+
+/* Detail pass: one continuous visual world, with the original editorial character intact. */
+.opening-art{
+  height:min(76vh,780px);
+  min-height:540px;
+  border-radius:20px;
+  isolation:isolate;
+  box-shadow:0 24px 80px rgba(0,0,0,.22),0 0 0 1px rgba(255,255,255,.035);
+}
+.opening-art:after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 57%,rgba(16,16,15,.48) 100%);
+}
+.opening-caption,.opening-stamp{z-index:3}
+.worlds,.work,.studio,.method,.contact{
+  background:var(--ink);
+  color:var(--white);
+  border-top:0;
+}
+.section-shell{position:relative}
+.section-shell + .section-shell{border-top:0}
+.section-intro .eyebrow,.work-heading .eyebrow,.studio-copy .eyebrow,.method .eyebrow,.contact .eyebrow{display:none}
+.section-intro>p:last-child{color:#aaa79e}
+.section-intro h2 span,.work-heading h2 span,.studio-copy h2 span,.method-top h2 span{color:#85837b}
+.world-selector{border-bottom-color:rgba(255,255,255,.13)}
+.world-tab{color:#96938a}
+.world-tab span,.world-tab.is-active span{color:var(--white)}
+.world-tab.is-active{color:var(--orange)}
+.world-tab.is-active b{color:var(--orange)}
+.world-panel-digital .digital-art{
+  background:#171715;
+  background-image:linear-gradient(rgba(250,248,241,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(250,248,241,.045) 1px,transparent 1px);
+}
+.world-panel-digital .digital-orbit{border-color:rgba(250,248,241,.16)}
+.world-panel-digital .orbit-b{border-color:rgba(255,99,56,.75)}
+.world-panel-digital .orbit-c{border-color:rgba(250,248,241,.28)}
+.world-panel-digital .digital-label,.world-panel-digital .digital-coordinate{color:#aaa79e}
+.world-panel-digital .digital-terminal{color:var(--white)}
+.world-panel-digital .world-description{background:#151513;color:var(--white)}
+.world-panel-digital .world-description>p:not(.world-kicker){color:#b9b6ad}
+.world-panel-digital .service-list{border-color:rgba(255,255,255,.13)}
+.world-panel-digital .service-list li{border-color:rgba(255,255,255,.08);color:#e5e1d8}
+.world-panel-digital .round-link{border-color:rgba(255,255,255,.15)}
+.studio{border-top:0}
+.studio-copy>p:not(.eyebrow),.studio-copy .studio-lede{color:#b9b6ad!important}
+.studio-copy .studio-lede{font-size:18px!important}
+.studio-principles{border-top-color:rgba(255,255,255,.13)}
+.studio-principles>div{border-bottom-color:rgba(255,255,255,.09)}
+.studio-principles p{color:#b9b6ad}
+.studio-principles b{color:var(--white)}
+.method{background:var(--ink)}
+.method-top>p:last-child,.method-steps article p{color:#aaa79e}
+.method-steps article{border-top-color:rgba(255,255,255,.13)}
+.contact{padding:clamp(90px,11vw,160px) 8vw}
+.contact-inner{grid-template-columns:.9fr 1.1fr;gap:clamp(50px,9vw,140px);align-items:start}
+.contact-main>p:not(.eyebrow){color:#b9b6ad}
+.contact-direct a{border-bottom-color:rgba(255,255,255,.15)}
+.project-form{
+  max-width:650px;
+  width:100%;
+  margin:28px 0 0 auto;
+  padding:clamp(28px,4vw,52px);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  column-gap:28px;
+  row-gap:0;
+  background:linear-gradient(145deg,#1a1a18 0%,#131312 100%);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:18px;
+  box-shadow:0 25px 70px rgba(0,0,0,.18);
+}
+.project-form .form-title,.project-form label:nth-of-type(n+3),.project-form .submit-button,.project-form .whatsapp-submit,.project-form .form-note{grid-column:1/-1}
+.project-form .form-title{margin-bottom:34px}
+.project-form label{margin-bottom:25px}
+.project-form input,.project-form select,.project-form textarea{border-bottom-color:rgba(255,255,255,.19);padding:14px 0}
+.project-form textarea{min-height:100px}
+.project-form .submit-button{margin-top:8px;border-radius:3px}
+.project-form .whatsapp-submit{border-bottom:1px solid rgba(255,255,255,.1)}
+.site-footer{
+  display:grid;
+  grid-template-columns:1.2fr 1fr 1fr;
+  gap:42px;
+  align-items:start;
+  padding:58px 8vw 24px;
+  background:#0d0d0c;
+  border-top:1px solid rgba(255,255,255,.055);
+}
+.footer-brand>p{max-width:230px;margin:22px 0 14px;color:#aaa79e;font-size:12px;line-height:1.7}
+.footer-note,.footer-label{display:block;font:9px var(--mono);letter-spacing:.12em;color:#77746b;text-transform:uppercase}
+.footer-column{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.footer-column .footer-label{margin:4px 0 7px;color:var(--orange)}
+.footer-column>a{font-size:12px;color:#d7d3ca;line-height:1.6;overflow-wrap:anywhere}
+.footer-column>a span{color:var(--orange);margin-left:5px}
+.footer-column>a:hover,.footer-bottom>a:hover{color:var(--orange)}
+.footer-bottom{grid-column:1/-1;display:flex;justify-content:space-between;gap:20px;padding-top:22px;margin-top:8px;border-top:1px solid rgba(255,255,255,.08);font:9px var(--mono);letter-spacing:.04em;color:#77746b}
+.footer-bottom a{color:#aaa79e}
+@media(max-width:1000px){
+  .opening-art{height:min(70vh,700px);min-height:500px}
+  .contact{padding-left:6vw;padding-right:6vw}
+  .site-footer{padding-left:6vw;padding-right:6vw;gap:30px}
+}
+@media(max-width:720px){
+  .opening-art{height:56vh;min-height:340px;max-height:560px;border-radius:16px}
+  .contact{padding:82px 22px}
+  .contact-inner{grid-template-columns:1fr;gap:32px}
+  .project-form{grid-template-columns:1fr;padding:28px 22px;margin:10px 0 0}
+  .project-form label,.project-form .form-title,.project-form .submit-button,.project-form .whatsapp-submit,.project-form .form-note{grid-column:1}
+  .site-footer{grid-template-columns:1fr 1fr;padding:42px 22px 22px;gap:32px 22px}
+  .footer-brand{grid-column:1/-1}
+  .footer-bottom{grid-column:1/-1}
+}
+@media(max-width:420px){
+  .site-footer{grid-template-columns:1fr}
+  .footer-brand,.footer-bottom{grid-column:1}
+  .footer-bottom{flex-direction:column}
+}
+
+/* Keep footer columns vertical; older generic footer rules should not flatten them. */
+.site-footer>.footer-brand,.site-footer>.footer-column{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:14px;
+  font:inherit;
+}
+.site-footer>.footer-brand{gap:0}
+.site-footer>.footer-column .footer-label{font:9px var(--mono);letter-spacing:.12em}
