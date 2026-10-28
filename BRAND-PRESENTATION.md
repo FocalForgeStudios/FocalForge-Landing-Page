@@ -1,57 +1,58 @@
-# Focal Forge Studios — Brand Presentation
+# Focal Forge Studios — Brand & Website Direction
 
-A refreshed, responsive one-page brand presentation for Focal Forge Studios, positioned as a Kampala-based creative and digital studio.
+## Brand idea
 
-## Brand direction
+**Make ideas matter.**
 
-**Core message:** Creative vision. Engineered execution.
+Focal Forge Studios brings together two distinct capabilities under one point of view: creative production that makes people feel something, and digital engineering that makes useful things work.
 
-**Homepage headline:** Make it matter.
+**Location:** Kampala, Uganda  
+**Studio character:** Independent, curious, intentional, technically capable, visually expressive.
 
-**Positioning:** Focal Forge brings visual storytelling, design, and digital engineering together under one studio.
+## Two disciplines, deliberately different
 
-### Brand pillars
-- **Visual production:** cinematography, photography, editing, and motion.
-- **Digital engineering:** websites, digital experiences, and custom software.
-- **Brand and design:** visual systems and campaign assets.
-- **Integrated projects:** projects where creative production and technology work together.
+### World 01 — Creative production
+Cinematography, photography, brand identity, art direction, editing, motion and post-production.
 
-### Visual system
-- Background: #11110F
-- Panels: #191917
-- Primary text: #F3F0E9
-- Secondary text: #A6A49C
-- Accent: #FF6A35
-- Display type: Space Grotesk
-- Body type: DM Sans
-- Technical labels: DM Mono
+Visual behavior: immersive photography, cinematic contrast, expressive typography, warmer human imagery, and editorial pacing.
 
-## Implementation
+### World 02 — Digital engineering
+Websites, digital experiences, product design, custom software, integrations and digital systems.
 
-This version deliberately keeps the site dependency-light and static-host friendly:
-- Semantic HTML and custom CSS
-- Responsive layouts and mobile navigation
-- Working portfolio filters (Film & video, Photography, Design)
-- Accessible form labels and browser validation
-- Enquiry handoff to email and WhatsApp
-- Reduced-motion support
-- SEO description and Open Graph metadata
-- Lazy loading for portfolio imagery
+Visual behavior: lighter surfaces, precise typographic hierarchy, modular diagrams, system-like annotations and purposeful interaction.
 
-## Local preview
+The worlds are not interchangeable service cards. Each has its own visual rhythm and point of view; the shared identity ties them together.
 
-Open index.html directly for a quick visual check, or serve the repository root with a local static server. External Google Fonts require a network connection; the site has system fallbacks.
+## Design system
 
-## Before public launch
+- **Ink:** #10100F
+- **Paper:** #F0EEE7
+- **Orange:** #FF6338
+- **Display:** Space Grotesk
+- **Body:** DM Sans
+- **Technical labels:** DM Mono
+- **Principle:** use whitespace, scale, imagery and contrast first. Use rules and outlines only when they explain structure or interaction.
 
-1. Review every image and confirm that it is owned/licensed and approved for public use.
-2. Replace descriptive sample portfolio labels with confirmed project names and case studies; do not imply client endorsements or outcomes that have not been verified.
-3. Confirm the official Instagram URL and all contact details.
-4. Add a canonical production URL and a social-sharing image with an absolute URL once the domain is confirmed.
-5. Replace or remove placeholder legal links if they are reintroduced.
-6. Test the email and WhatsApp handoff on mobile and desktop.
-7. Run a real-device accessibility and performance pass.
+## Website structure
 
-## Deployment
+1. Opening statement and studio imagery
+2. Interactive two-world experience
+3. Selected work archive with category filters
+4. Studio story and working principles
+5. Four-stage project method
+6. Project enquiry
 
-The site is static and can be hosted by GitHub Pages, Cloudflare Pages, or another static host. Configure the production domain and deployment workflow before publishing. This branch does not change the live default branch.
+## Technical implementation
+
+The site uses semantic HTML, a separate stylesheet and a separate JavaScript file. It is static-host friendly and requires no build step. It includes responsive navigation, keyboard-operable world switching, portfolio filtering, form validation, reduced-motion handling, and organization metadata.
+
+The enquiry form prepares an email; it does not store submissions. A backend is required for reliable lead capture.
+
+## Launch checklist
+
+- Confirm image rights and final asset choices.
+- Approve case-study descriptions and any client attribution.
+- Verify contact information and social links.
+- Test mobile and desktop layouts, keyboard access, contrast and loading performance.
+- Configure reliable server-side lead capture if required.
+- Confirm the production domain and canonical URL.
