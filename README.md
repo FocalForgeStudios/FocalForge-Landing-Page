@@ -1,37 +1,44 @@
-# Focal Forge Studios — Ground-up website rebuild
+# Focal Forge Studios — Industrial Brand Hub
 
-A fresh static website for Focal Forge Studios, an independent creative and digital studio based in Kampala, Uganda.
+A responsive studio website with a restrained black / charcoal / white palette and a single orange accent (`#FF5722`). Built with semantic HTML, vanilla CSS/JavaScript, and an optional Node/PostgreSQL API.
 
-## The idea
+## Frontend features
 
-The website is designed around the studio's two disciplines as distinct experiences, rather than a generic agency template:
+- Sticky glass-effect navigation and responsive mobile menu
+- Interactive cinematography/software hero mode switch
+- Distinct visual media and software capability worlds
+- Filterable project archive with case-study dialogs
+- Four-step project scoper with editable indicative UGX assumptions
+- Interactive client workspace preview for milestones, proofing and vault metadata
+- Accessible focus states, reduced-motion support, semantic labels, and responsive layouts
+- Inquiry form with API submission when configured and email/WhatsApp fallback links
 
-- **Creative production** — cinematic, image-led, tactile, editorial.
-- **Digital engineering** — precise, typographic, system-led, with its own visual language.
+## Backend
 
-The disciplines share a studio voice and an orange accent, but deliberately differ in composition, imagery, surfaces, and content rhythm.
-
-## Stack
-
-- Semantic HTML
-- Separate CSS design system in `styles.css`
-- Vanilla JavaScript in `main.js`
-- No build step or framework dependency; compatible with GitHub Pages
-- Responsive layout, keyboard-operable discipline selector, portfolio filters, reduced-motion support, and basic organization metadata
+See [backend/README.md](backend/README.md). The Express API validates and stores project enquiries in PostgreSQL, supports published-project and pricing-catalog read endpoints, and optionally sends webhook notifications. The schema and migration runner are included.
 
 ## Run locally
 
-Open `index.html` in a browser or serve the directory using any static file server.
+For a quick frontend preview, serve the repository root with any static server. For example:
 
-## Enquiry form
+```sh
+python -m http.server 8080
+```
 
-The contact form validates the brief and prepares an email through the visitor's mail application. It does **not** persist submissions to a database. A server-side delivery route and spam protection should be added before relying on this as a lead-management system.
+Open `http://localhost:8080`. To enable database-backed enquiries, deploy/configure the API separately and set the `ff-api-base` meta tag in `index.html` to its HTTPS origin.
 
-## Before calling it production-ready
+## Important launch boundaries
 
-1. Confirm image rights and approve the final image selections.
-2. Replace sample portfolio labels with real, approved case studies, outcomes, and client names where permitted.
-3. Verify all business details and social links.
-4. Test at real mobile, tablet, and desktop sizes and check keyboard navigation.
-5. If form submissions need to be captured reliably, connect a backend and configure delivery and spam protection.
-6. Confirm the final domain, canonical URL, analytics and privacy requirements.
+- The project scoper provides a **directional estimate only**. Baseline prices are assumptions in `main.js` and must be approved by the studio before they are treated as a commercial price list.
+- Archive entries and case-study descriptions are illustrative until the studio supplies approved, verified project briefs and outcomes. No fabricated client metrics are claimed.
+- The client workspace is a front-end demo. It is not authenticated, does not store proofing sign-offs, and does not provide real downloads.
+- Database storage and webhook alerts are not active until the backend is deployed with valid environment variables.
+- Add CAPTCHA/Turnstile, monitoring, backup policies and a secured admin/CMS workflow before a production launch.
+
+## Palette and type
+
+- Black: `#101010`
+- Charcoal: `#191919` / `#202020`
+- White: `#F5F5F2`
+- Brand orange: `#FF5722`
+- Display: Space Grotesk; body: Inter; metadata: DM Mono

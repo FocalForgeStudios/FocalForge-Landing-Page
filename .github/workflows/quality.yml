@@ -1,0 +1,23 @@
+name: Quality checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  syntax-and-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check JavaScript syntax
+        run: |
+          node --check main.js
+          node --check backend/src/server.js
+          node --check backend/src/migrate.js
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm install
+      - name: Validate SQL migration file exists
+        run: test -s backend/schema.sql
