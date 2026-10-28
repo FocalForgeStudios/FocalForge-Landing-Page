@@ -18,6 +18,8 @@ npm run dev
 Health check: `GET /health`  
 Published portfolio: `GET /api/projects`  
 Published planning prices: `GET /api/pricing`  
+CMS project upsert: `POST /api/admin/projects` (Bearer token)  
+CMS pricing upsert: `POST /api/admin/pricing` (Bearer token)  
 New enquiry: `POST /api/inquiries`
 
 Example request body:
@@ -44,7 +46,7 @@ Set the value of `<meta name="ff-api-base" content="">` in the root `index.html`
 - The inquiry endpoint validates payloads with Zod, limits JSON size, and applies per-IP rate limiting.
 - Webhook delivery is best-effort after the inquiry is committed; failures are logged without discarding the lead.
 - CORS is an origin policy, not authentication. Add CAPTCHA/Turnstile and operational monitoring before public launch.
-- Admin CRUD/authentication for projects and pricing is intentionally not exposed in this public API. Manage `projects` and `pricing_catalog` through a secured CMS/admin tool or a controlled database workflow. The public API only reads records marked `published = TRUE`. Never expose database credentials or unauthenticated write endpoints.
+- CMS writes are exposed only through token-protected `POST /api/admin/projects` and `POST /api/admin/pricing` upsert endpoints. Set a long random `CMS_ADMIN_TOKEN` server-side and send it as a Bearer token. Never expose this token in browser code. Public read endpoints return only records marked `published = TRUE`; use an internal admin UI or secure API client for edits.
 - The client workspace on the public site is an interactive UI demonstration only. A real portal needs authentication, per-client authorization, audit logs, and expiring object-storage URLs before it can handle private documents.
 - No real client projects are seeded. Publish only approved, fact-checked case studies.
 
