@@ -37,13 +37,15 @@
     systems:{category:'DIGITAL / PRODUCT THINKING',title:'Beyond the screen',intro:'A concept for a practical digital product where the interface, business rules and data model work as one.',problem:'Disjointed workflows create friction when users must move between information, tools and manual follow-up.',execution:'Map user journeys, define a clear interface system, separate application logic from persistence and design an API that can evolve.',deliverables:'Product scope, responsive UI, API contract, database schema and deployment notes.'}
   };
   const dialog = $('#case-dialog');
-  $$('.project-card').forEach(card => card.addEventListener('click', () => {
-    const item = caseStudies[card.dataset.project]; if (!item || !dialog) return;
+  $('#project-grid')?.addEventListener('click', event => {
+    const card = event.target.closest('.project-card');
+    if (!card || !dialog) return;
+    const item = caseStudies[card.dataset.project]; if (!item) return;
     $('#case-category').textContent = item.category; $('#case-title').textContent = item.title;
     $('#case-intro').textContent = item.intro; $('#case-problem').textContent = item.problem;
     $('#case-execution').textContent = item.execution; $('#case-deliverables').textContent = item.deliverables;
     dialog.showModal();
-  }));
+  });
   $('.dialog-close')?.addEventListener('click', () => dialog?.close());
   dialog?.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
   $('#case-cta')?.addEventListener('click', () => dialog?.close());
@@ -174,10 +176,24 @@
       if(!response.ok)return;
       const data=await response.json();
       if(!Array.isArray(data.projects)||!data.projects.length)return;
-      // Existing editorial cards remain the graceful fallback. API-managed projects are
-      // announced here until approved CMS records include an explicit, trusted image URL.
       document.documentElement.dataset.cms='connected';
-      const note=$('.disclaimer');if(note)note.textContent='Portfolio API connected · '+data.projects.length+' published project record(s) available.';
+      const grid=$('#project-grid');
+      data.projects.forEach((project,index)=>{
+        if(!project || !project.slug || !project.title || !project.summary || !['visual','digital','brand'].includes(project.category)) return;
+        const safeImage=(()=>{try{const u=new URL(project.image_url,window.location.href);return ['https:','http:'].includes(u.protocol)?u.href:'';}catch(_){return '';}})();
+        const key='cms-'+String(project.slug).replace(/[^a-z0-9_-]/gi,'').slice(0,80);
+        caseStudies[key]={category:String(project.category).toUpperCase()+' / CMS PUBLISHED',title:String(project.title),intro:String(project.summary),problem:String(project.problem||'Project challenge details are being prepared.'),execution:String(project.execution||'Execution details are being prepared.'),deliverables:String(project.deliverables||'Deliverable list to be confirmed.')};
+        const card=document.createElement('button');card.type='button';card.className='project-card';card.dataset.project=key;card.dataset.category=project.category;
+        const imageWrap=document.createElement('span');imageWrap.className='project-image';
+        if(safeImage){const img=document.createElement('img');img.src=safeImage;img.alt=String(project.title)+' project image';img.loading='lazy';imageWrap.append(img);}
+        else {imageWrap.classList.add('project-system');const placeholder=document.createElement('span');placeholder.className='system-card-art';const text=document.createElement('strong');text.textContent=String(project.title);placeholder.append(text);imageWrap.append(placeholder);}
+        const open=document.createElement('span');open.className='project-open';open.textContent='VIEW CASE ↗';imageWrap.append(open);
+        const info=document.createElement('span');info.className='project-info';
+        const titleWrap=document.createElement('span');const small=document.createElement('small');small.textContent=String(project.category).toUpperCase()+' / PUBLISHED';const title=document.createElement('b');title.textContent=String(project.title);titleWrap.append(small,title);
+        const number=document.createElement('span');number.className='project-number mono';number.textContent='CMS / '+String(index+1).padStart(2,'0');info.append(titleWrap,number);
+        const tags=document.createElement('span');tags.className='tag-row';(Array.isArray(project.tags)?project.tags:[]).slice(0,5).forEach(value=>{const tag=document.createElement('i');tag.textContent=String(value).slice(0,40);tags.append(tag);});info.append(tags);card.append(imageWrap,info);grid.append(card);
+      });
+      const note=$('.disclaimer');if(note)note.textContent='Published portfolio entries are loaded from the studio CMS when the API is connected. The original archive remains as a fallback.';
     }catch(_){/* Keep the statically curated archive usable when API is offline. */}
   }
   loadPortfolio();
